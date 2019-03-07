@@ -77,7 +77,6 @@ abstract class ActiveRecordEntity
             $propertyNameAsUnderscore = $this->camelCaseToUnderscore($propertyName);
             $mappedProperties[$propertyNameAsUnderscore] = $this->$propertyName;
         }
-
         return $mappedProperties;
     }
 
@@ -130,7 +129,7 @@ abstract class ActiveRecordEntity
         $this->refresh();
     }
 
-    private function refresh(): void
+    public function refresh(): void
     {
         $objFromDb = static::getById($this->id);
         $reflector = new \ReflectionObject($objFromDb);
@@ -151,4 +150,14 @@ abstract class ActiveRecordEntity
         $this->id = null;
     }
 
+    public static function findOneByColumn (string $columnName, string $value): ?self
+    {
+        $db = Db::getInstance();
+        $result = $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE ' . $columnName . ' = :value LIMIT 1;',
+            [':value' => $value],
+            static::class
+        );
+
+        return $result === [] ? null : $result[0];
+    }
 }
