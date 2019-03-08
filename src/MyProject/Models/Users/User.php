@@ -13,7 +13,7 @@ class User extends ActiveRecordEntity
     /** @var string */
     protected $email;
 
-    /** @var string */
+    /** @var bool */
     protected $isConfirmed;
 
     /** @var string */
@@ -94,5 +94,10 @@ class User extends ActiveRecordEntity
     {
         $this->isConfirmed = true;
         $this->save();
+    }
+
+    public function isActivated(): bool
+    {
+        return $this->isConfirmed;
     }
 }
