@@ -35,10 +35,27 @@ class ArticlesController extends AbstractController
             throw new NotFoundException();
         }
 
-        $article->setName('Новое название статьи1');
-        $article->setText('Новый текст статьи1');
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
-        $article->save();
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
+        }
+
+        if (!empty($_POST)) {
+            try {
+                $article->updateFromArray($_POST);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage(), 'article' => $article]);
+                return;
+            }
+
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
     public function add()
@@ -68,7 +85,16 @@ class ArticlesController extends AbstractController
 
     public function delete(int $articleId)
     {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
+        }
+
         $article = Article::getById($articleId);
+
         if ($article === null) {
             $this->view->renderHtml('errors/NotFound.php', ['error' => 'Статья не может быть удалена, так как ее не существует!']);
         } else {
