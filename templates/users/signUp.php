@@ -2,11 +2,8 @@
     <div style="text-align: center;">
         <h1>Регистрация</h1>
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger" role="alert">
-                <?= $error ?>
-            </div>
+            <div class="alert alert-danger" role="alert"><?= $error ?></div>
         <?php endif; ?>
-
 
         <form action="/users/register" method="post">
             <div style="text-align: left">
@@ -16,8 +13,8 @@
                            value="<?= $_POST['nickname'] ?? '' ?>">
                 </div>
                 <div class="form-group">
-                    <label for="email1">Email address</label>
-                    <input type="text" class="form-control" id="email1" placeholder="Enter email" name="email"
+                    <label for="email">Email address</label>
+                    <input type="text" class="form-control" id="email" placeholder="Enter email" name="email"
                            value="<?= $_POST['email'] ?? '' ?>">
                 </div>
                 <div class="form-group">

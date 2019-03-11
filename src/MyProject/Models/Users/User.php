@@ -2,6 +2,7 @@
 
 namespace MyProject\Models\Users;
 
+use http\Exception\InvalidArgumentException;
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
 
@@ -99,5 +100,49 @@ class User extends ActiveRecordEntity
     public function isActivated(): bool
     {
         return $this->isConfirmed;
+    }
+
+    public static function login(array $loginData): User
+    {
+        if (empty($loginData['email'])) {
+            throw new InvalidArgumentException('Не передан email');
+        }
+
+        if (empty($loginData['password'])) {
+            throw new InvalidArugmentException('Не передан пароль');
+        }
+
+        $user = User::findOneByColumn('email', $loginData['email']);
+        if ($user === null) {
+            throw new InvalidArugmentException('Нет пользователя с таким email');
+        }
+
+        if (!password_verify($loginData['password'], $user->getPasswordHash())) {
+            throw new InvalidArugmentException('Неправильный пароль');
+        }
+
+        if (!$user->isActivated()) {
+            throw new InvalidArugmentException('Пользователь не подтвержден');
+        }
+
+        $user->refreshAuthToken();
+        $user->save();
+
+        return $user;
+    }
+
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
+    public function getAuthToken(): string
+    {
+        return $this->authToken;
+    }
+
+    public function refreshAuthToken()
+    {
+        $this->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
     }
 }

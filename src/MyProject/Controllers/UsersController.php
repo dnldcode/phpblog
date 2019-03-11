@@ -6,19 +6,12 @@ use MyProject\Exceptions\ActivationException;
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\Users\UserActivationService;
 use MyProject\Services\EmailSender;
+use MyProject\Services\UsersAuthService;
 use MyProject\View\View;
 use MyProject\Models\Users\User;
 
-class UsersController
+class UsersController extends AbstractController
 {
-    /** @var View */
-    private $view;
-
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-    }
-
     public function signUp()
     {
         if (!empty($_POST)) {
@@ -50,15 +43,15 @@ class UsersController
             $user = User::getById($userId);
 
             if ($user === null) {
-                throw new ActivationException('User was not found');
+                throw new ActivationException('Невозможно найти пользователя');
             }
 
             if ($user->isActivated()) {
-                throw new ActivationException('User is already activated');
+                throw new ActivationException('Данный аккаунт уже активирован');
             }
             $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
             if (!$isCodeValid) {
-                throw new ActivationException('Code is not valid');
+                throw new ActivationException('Код активации не действителен');
             }
 
             $user->activate();
@@ -67,5 +60,29 @@ class UsersController
         } catch (ActivationException $e) {
             $this->view->renderHtml('errors/activationError.php', ['error' => $e->getMessage()], 422);
         }
+    }
+
+    public function login()
+    {
+        if (!empty($_POST)){
+            try{
+                $user = User::login($_POST);
+                UsersAuthService::createToken($user);
+                header('Location: /');
+                exit();
+            }
+            catch (InvalidArugmentException $e)
+            {
+                $this->view->renderHtml('users/login.php', ['error' => $e->getMessage()]);
+                return;
+            }
+        }
+        $this->view->renderHtml('users/login.php');
+    }
+
+    public function logout()
+    {
+        setcookie('token', '', -1, '/', '', false, true);
+        header('Location: /');
     }
 }
