@@ -2,6 +2,7 @@
 
 namespace MyProject\Models\Articles;
 
+use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Services\Db;
 use MyProject\Models\Users\User;
@@ -82,5 +83,26 @@ class Article extends ActiveRecordEntity
     public function setAuthor(User $author): void
     {
         $this->authorId = $author->getId();
+    }
+
+    public static function createFromArray(array $fields, User $author): Article
+    {
+        if (empty($fields['name'])){
+            throw new InvalidArugmentException('Не передано название статьи');
+        }
+
+        if (empty($fields['text'])){
+            throw new InvalidArugmentException('Не передан текст статьи');
+        }
+
+        $article = new Article();
+
+        $article->setAuthor($author);
+        $article->setName($fields['name']);
+        $article->setText($fields['text']);
+
+        $article->save();
+
+        return $article;
     }
 }

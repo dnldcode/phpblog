@@ -2,7 +2,10 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\Forbidden;
+use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Exceptions\NotFoundException;
+use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
 use MyProject\Models\Users\User;
 use MyProject\Services\UsersAuthService;
@@ -40,16 +43,27 @@ class ArticlesController extends AbstractController
 
     public function add()
     {
-        $author = User::getById(1);
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
 
-        $article = new Article();
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
+        }
 
-        $article->setName('Новое название статьи');
-        $article->setText('Новый текст статьи');
-        $article->setAuthor($author);
+        if (!empty($_POST)) {
+            try {
+                $article = Article::createFromArray($_POST, $this->user);
+            } catch (InvalidArugmentException $e) {
+                $this->view->renderHtml('articles/add.php', ['error' => $e->getMessage()]);
+                return;
+            }
 
-        $article->save();
-        $this->view->renderHtml('articles/ArticleAdded.php');
+            header('Location: /articles/' . $article->getId(), true, 302);
+            exit();
+        }
+
+        $this->view->renderHtml('articles/add.php');
     }
 
     public function delete(int $articleId)
