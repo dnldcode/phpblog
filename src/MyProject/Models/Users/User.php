@@ -2,7 +2,6 @@
 
 namespace MyProject\Models\Users;
 
-use http\Exception\InvalidArgumentException;
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
 
@@ -105,7 +104,7 @@ class User extends ActiveRecordEntity
     public static function login(array $loginData): User
     {
         if (empty($loginData['email'])) {
-            throw new InvalidArgumentException('Не передан email');
+            throw new InvalidArugmentException('Не передан email');
         }
 
         if (empty($loginData['password'])) {

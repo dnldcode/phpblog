@@ -19,9 +19,7 @@ class Db
                 $dbOptions['user'], $dbOptions['password']
             );
             $this->pdo->exec('SET NAMES UTF8');
-        }
-        catch (\PDOException $e)
-        {
+        } catch (\PDOException $e) {
             throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
         }
     }
@@ -47,6 +45,6 @@ class Db
 
     public function getLastInsertId(): int
     {
-        return (int) $this->pdo->lastInsertId();
+        return (int)$this->pdo->lastInsertId();
     }
 }

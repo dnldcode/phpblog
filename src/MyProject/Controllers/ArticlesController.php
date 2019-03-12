@@ -7,10 +7,7 @@ use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
-use MyProject\Models\Users\User;
-use MyProject\Services\UsersAuthService;
-use MyProject\View\View;
-use MyProject\Services\Db;
+use MyProject\Models\Comments\Comment;
 
 class ArticlesController extends AbstractController
 {
@@ -23,7 +20,8 @@ class ArticlesController extends AbstractController
         }
 
         $this->view->renderHtml('articles/view.php', [
-            'article' => $article
+            'article' => $article,
+            'comments' => Comment::findAllByArticleId($articleId)
         ]);
     }
 
@@ -98,9 +96,9 @@ class ArticlesController extends AbstractController
         if ($article === null) {
             $this->view->renderHtml('errors/NotFound.php', ['error' => 'Статья не может быть удалена, так как ее не существует!']);
         } else {
+            Comment::deleteCommentsInArticle($article->getId());
             $article->delete();
             $this->view->renderHtml('articles/ArticleDeleted.php');
         }
     }
-
 }

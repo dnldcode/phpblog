@@ -7,7 +7,6 @@ use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\Users\UserActivationService;
 use MyProject\Services\EmailSender;
 use MyProject\Services\UsersAuthService;
-use MyProject\View\View;
 use MyProject\Models\Users\User;
 
 class UsersController extends AbstractController
@@ -64,15 +63,13 @@ class UsersController extends AbstractController
 
     public function login()
     {
-        if (!empty($_POST)){
-            try{
+        if (!empty($_POST)) {
+            try {
                 $user = User::login($_POST);
                 UsersAuthService::createToken($user);
                 header('Location: /');
                 exit();
-            }
-            catch (InvalidArugmentException $e)
-            {
+            } catch (InvalidArugmentException $e) {
                 $this->view->renderHtml('users/login.php', ['error' => $e->getMessage()]);
                 return;
             }

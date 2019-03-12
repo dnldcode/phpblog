@@ -3,8 +3,6 @@
 namespace MyProject\Controllers;
 
 use MyProject\Models\Articles\Article;
-use MyProject\Services\UsersAuthService;
-use MyProject\View\View;
 
 class MainController extends AbstractController
 {

@@ -121,7 +121,6 @@ abstract class ActiveRecordEntity
             $index++;
 
         }
-
         $sql = 'INSERT INTO ' . static::getTableName() . '(' . implode(', ', $columns) . ') VALUES (' . implode(', ', $params) . ');';
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);

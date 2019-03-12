@@ -4,7 +4,6 @@ namespace MyProject\Models\Articles;
 
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
-use MyProject\Services\Db;
 use MyProject\Models\Users\User;
 
 class Article extends ActiveRecordEntity
