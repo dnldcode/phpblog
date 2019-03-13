@@ -13,5 +13,6 @@ return [
     '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'addComment'],
     '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
     '~^comments/(\d+)/delete$~' => [\MyProject\Controllers\CommentsController::class, 'delete'],
+    '~^user/id(\d+)$~' => [\MyProject\Controllers\UsersController::class, 'show'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main']
 ];

@@ -28,6 +28,9 @@ class User extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
+
+    //    Getters and Setters
+
     /**
      * @return string
      */
@@ -51,6 +54,30 @@ class User extends ActiveRecordEntity
     {
         return 'users';
     }
+
+    /**
+     * @return string
+     */
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthToken(): string
+    {
+        return $this->authToken;
+    }
+
+    public function getRegistrationDate(): string
+    {
+        $date = new \DateTime($this->createdAt);
+        return $date->format('Y-m-d');
+    }
+
+    //////////////
 
     public static function signUp(array $userData): User
     {
@@ -128,16 +155,6 @@ class User extends ActiveRecordEntity
         $user->save();
 
         return $user;
-    }
-
-    public function getPasswordHash(): string
-    {
-        return $this->passwordHash;
-    }
-
-    public function getAuthToken(): string
-    {
-        return $this->authToken;
     }
 
     public function refreshAuthToken(): void

@@ -4,6 +4,8 @@ namespace MyProject\Controllers;
 
 use MyProject\Exceptions\ActivationException;
 use MyProject\Exceptions\InvalidArugmentException;
+use MyProject\Exceptions\NotFoundException;
+use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Users\UserActivationService;
 use MyProject\Services\EmailSender;
 use MyProject\Services\UsersAuthService;
@@ -81,5 +83,19 @@ class UsersController extends AbstractController
     {
         setcookie('token', '', -1, '/', '', false, true);
         header('Location: /');
+    }
+
+    public function show(int $userId)
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        $profile = User::getById($userId);
+        if ($profile === null){
+            throw new NotFoundException();
+        }
+
+        $this->view->renderHtml('users/profile.php', ['profile' => $profile]);
     }
 }
