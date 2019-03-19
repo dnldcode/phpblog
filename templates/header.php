@@ -15,7 +15,6 @@
     <tr>
         <td colspan="2" style="text-align: right">
             <?php if (!empty($user)): ?>
-<!--                'Привет, ' . $user->getNickname() . ' | <a href="/users/logout">Выйти</a>'-->
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?= $user->getNickname() ?>
@@ -23,7 +22,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="/user/id<?= $user->getId() ?>">Мой профиль</a>
                         <a class="dropdown-item disabled" href="#">Мои статьи</a>
-                        <a class="dropdown-item disabled" href="#">Настройки</a>
+                        <a class="dropdown-item" href="/settings">Настройки</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/users/logout">Выйти</a>
                     </div>

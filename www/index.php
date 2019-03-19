@@ -7,7 +7,6 @@ try {
 
     $route = $_GET['route'] ?? '';
     $routes = require __DIR__ . '/../src/routes.php';
-
     $isRoutFound = false;
     foreach ($routes as $pattern => $contollerAndAction) {
         preg_match($pattern, $route, $matches);

@@ -20,6 +20,9 @@ class User extends ActiveRecordEntity
     protected $role;
 
     /** @var string */
+    protected $photo;
+
+    /** @var string */
     protected $passwordHash;
 
     /** @var string */
@@ -53,6 +56,24 @@ class User extends ActiveRecordEntity
     protected static function getTableName(): string
     {
         return 'users';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto(): string
+    {
+        if (!file_exists(__DIR__ . '/../../../../www/' . $this->photo)) {
+            $this->photo = '';
+            $this->save();
+
+            return 'uploads/default.png';
+        }
+
+        if (empty($this->photo))
+            return 'uploads/default.png';
+        else
+            return $this->photo;
     }
 
     /**
@@ -165,5 +186,11 @@ class User extends ActiveRecordEntity
     public function isAdmin(): bool
     {
         return $this->role === admin;
+    }
+
+    public function updatePhoto(string $path): void
+    {
+        $this->photo = $path;
+        $this->save();
     }
 }

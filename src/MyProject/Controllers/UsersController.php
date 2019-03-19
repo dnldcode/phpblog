@@ -92,10 +92,42 @@ class UsersController extends AbstractController
         }
 
         $profile = User::getById($userId);
-        if ($profile === null){
+        if ($profile === null) {
             throw new NotFoundException();
         }
 
         $this->view->renderHtml('users/profile.php', ['profile' => $profile]);
+    }
+
+    public function settings()
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!empty($_FILES)) {
+            $file = $_FILES['attachment'];
+
+            $newFilePath = __DIR__ . '/../../../www/uploads/photo' . $this->user->getId() . '.jpg';
+
+            $imageSize = getimagesize($file['tmp_name']);
+
+            $allowedExtensions = ['jpg', 'png', 'gif'];
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            if (!in_array($extension, $allowedExtensions)) {
+                $error = 'Загрузка файлов с таким расширением запрещена!';
+            } elseif ($file['error'] == UPLOAD_ERR_INI_SIZE) {
+                $error = 'Размер файла слишком большой';
+            } elseif ($imageSize[0] > 1000 || $imageSize[1] > 1000) {
+                $error = 'Недопустимое расширение изображения. Максимальное - 1000px x 1000px';
+            } elseif ($file['error'] !== UPLOAD_ERR_OK ||!move_uploaded_file($file['tmp_name'], $newFilePath)) {
+                $error = 'Ошибка при загрузке файла';
+            } else {
+                $message = "Фотография успешно загружена";
+                $this->user->updatePhoto('uploads/photo' . $this->user->getId() . '.jpg');
+            }
+        }
+
+        $this->view->renderHtml('users/settings.php', ['error' => $error, 'message' => $message]);
     }
 }
