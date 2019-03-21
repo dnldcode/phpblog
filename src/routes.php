@@ -14,5 +14,6 @@ return [
     '~^comments/(\d+)/delete$~' => [\MyProject\Controllers\CommentsController::class, 'delete'],
     '~^user/id(\d+)$~' => [\MyProject\Controllers\UsersController::class, 'show'],
     '~^settings$~' => [\MyProject\Controllers\UsersController::class, 'settings'],
+    '~^adminpanel~' => [\MyProject\Controllers\AdminPanelController::class, 'view'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main']
 ];
