@@ -39,9 +39,34 @@ class Article extends ActiveRecordEntity
     /**
      * @return string
      */
+    public function getShortText(): string
+    {
+        return substr($this->text, 0, 100);
+    }
+
+    /**
+     * @return string
+     */
     public function getAuthor(): User
     {
         return User::getById($this->authorId);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAuthorId(): int
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): string
+    {
+        $date = new \DateTime($this->createdAt);
+        return $date->format('Y-m-d');
     }
 
     /**

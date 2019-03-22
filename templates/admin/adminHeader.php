@@ -16,7 +16,7 @@
 
                 <ul class="nav nav-pills nav-justified flex-column pt-5">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Все статьи</a>
+                        <a class="nav-link" href="/adminpanel">Все статьи</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Все комментарии</a>
