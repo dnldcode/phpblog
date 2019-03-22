@@ -5,6 +5,7 @@ namespace MyProject\Models\Articles;
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
+use MyProject\Services\Db;
 
 class Article extends ActiveRecordEntity
 {
@@ -111,11 +112,11 @@ class Article extends ActiveRecordEntity
 
     public static function createFromArray(array $fields, User $author): Article
     {
-        if (empty($fields['name'])){
+        if (empty($fields['name'])) {
             throw new InvalidArugmentException('Не передано название статьи');
         }
 
-        if (empty($fields['text'])){
+        if (empty($fields['text'])) {
             throw new InvalidArugmentException('Не передан текст статьи');
         }
 
@@ -146,5 +147,11 @@ class Article extends ActiveRecordEntity
         $this->save();
 
         return $this;
+    }
+
+    public function getAllByUserId(int $id): array
+    {
+        $db = Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE author_id = :author_id;', [':author_id' => $id], static::class);
     }
 }

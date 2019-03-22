@@ -17,5 +17,6 @@ return [
     '~^adminpanel$~' => [\MyProject\Controllers\AdminPanelController::class, 'view'],
     '~^adminpanel/comments$~' => [\MyProject\Controllers\AdminPanelController::class, 'comments'],
     '~^adminpanel/users$~' => [\MyProject\Controllers\AdminPanelController::class, 'users'],
+    '~^adminpanel/users/(\d+)/articles~' => [\MyProject\Controllers\AdminPanelController::class, 'articlesById'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main']
 ];

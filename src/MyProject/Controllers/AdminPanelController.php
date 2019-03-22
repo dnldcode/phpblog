@@ -3,6 +3,7 @@
 namespace MyProject\Controllers;
 
 use MyProject\Exceptions\Forbidden;
+use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
 use MyProject\Models\Comments\Comment;
@@ -37,6 +38,26 @@ class AdminPanelController extends AbstractController
 
         $comments = Comment::findAll();
         $this->view->renderHtml('admin/comments.php', ['title' => 'Комментарии', 'comments' => $comments]);
+    }
+
+    public function articlesById(int $id)
+    {
+        if (empty($this->user)) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Недостаточно прав');
+        }
+
+        $user = User::getById($id);
+
+        if ($user === null){
+            throw new NotFoundException('Пользователь не найден');
+        }
+
+        $articles = Article::getAllByUserId($id);
+        $this->view->renderHtml('admin/userArticles.php', ['title' => 'Комментарии', 'articles' => $articles, 'profile' => $user]);
     }
 
     public function users()
