@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/adminpanel/comments">Все комментарии</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Все пользователи</a>
+                        <a class="nav-link" href="/adminpanel/users">Все пользователи</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Заявки на публикацию</a>

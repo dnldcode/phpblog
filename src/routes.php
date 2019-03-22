@@ -16,5 +16,6 @@ return [
     '~^settings$~' => [\MyProject\Controllers\UsersController::class, 'settings'],
     '~^adminpanel$~' => [\MyProject\Controllers\AdminPanelController::class, 'view'],
     '~^adminpanel/comments$~' => [\MyProject\Controllers\AdminPanelController::class, 'comments'],
+    '~^adminpanel/users$~' => [\MyProject\Controllers\AdminPanelController::class, 'users'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main']
 ];
