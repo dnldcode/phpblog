@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-2 p-4 left-panel">
             <div class="row">
-                <a href="/adminpanel" style="text-decoration: none"><h2>Admin panel</h2></a>
+                <a href="/adminpanel" style="text-decoration: none; color:white"><h2>Admin panel</h2></a>
             </div>
             <div class="row">
 
@@ -19,7 +19,7 @@
                         <a class="nav-link" href="/adminpanel">Все статьи</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Все комментарии</a>
+                        <a class="nav-link" href="/adminpanel/comments">Все комментарии</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Все пользователи</a>

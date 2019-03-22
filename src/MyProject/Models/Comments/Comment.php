@@ -62,11 +62,28 @@ class Comment extends ActiveRecordEntity
     }
 
     /**
+     * @return User
+     */
+    public function getAuthor(): User
+    {
+        return User::getById($this->getAuthorId());
+    }
+
+    /**
      * @return string
      */
     public function getText(): string
     {
         return $this->text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDate(): string
+    {
+        $date = new \DateTime($this->createdAt);
+        return $date->format('Y-m-d');
     }
 
     /**
