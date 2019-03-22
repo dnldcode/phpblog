@@ -98,6 +98,38 @@ class User extends ActiveRecordEntity
         return $date->format('Y-m-d');
     }
 
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string $isConfirmed
+     */
+    public function setIsConfirmed(string $isConfirmed): void
+    {
+        $this->isConfirmed = $isConfirmed;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
+    }
+
     //////////////
 
     public static function signUp(array $userData): User
@@ -144,7 +176,7 @@ class User extends ActiveRecordEntity
         $this->save();
     }
 
-    public function isActivated(): bool
+    public function isActivated()
     {
         return $this->isConfirmed;
     }
@@ -192,5 +224,27 @@ class User extends ActiveRecordEntity
     {
         $this->photo = $path;
         $this->save();
+    }
+
+    public function updateFromArray(array $fields): User
+    {
+        if (empty($fields['email'])) {
+            throw new InvalidArugmentException('Не передан email');
+        }
+
+        if ($fields['activated'] !== '0' && empty($fields['activated'])) {
+            throw new InvalidArugmentException('Не передано поле activated');
+        }
+
+        if (empty($fields['role'])) {
+            throw new InvalidArugmentException('Не передана роль');
+        }
+        $this->setEmail($fields['email']);
+        $this->setIsConfirmed($fields['activated']);
+        $this->setRole($fields['role']);
+
+        $this->save();
+
+        return $this;
     }
 }

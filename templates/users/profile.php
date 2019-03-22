@@ -24,5 +24,4 @@
             <div class="col"><?= $profile->getRegistrationDate() ?></div>
         </div>
     </div>
-    <p></p>
 <?php include __DIR__ . '/../footer.php'; ?>

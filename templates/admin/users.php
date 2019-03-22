@@ -24,7 +24,7 @@
             <td><a href="/adminpanel/users/<?= $user->getId() ?>/articles">Click</a></td>
             <td><?= $user->getEmail() ?></td>
             <td><?= $user->getRegistrationDate() ?></td>
-            <td><a href="/adminpanel/users/<?= $user->getId() ?>/edit" class="btn btn-primary disabled"
+            <td><a href="/adminpanel/users/id<?= $user->getId() ?>" class="btn btn-primary"
                    style="color: white">Изменить</a></td>
 
         </tr>

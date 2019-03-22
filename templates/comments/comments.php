@@ -34,9 +34,6 @@
                             <?= \MyProject\Models\Users\User::getById($comment->getAuthorId())->getNickname() ?></div>
                         <div style="float: right">
                             <?php if ($user->getId() === $comment->getAuthorId() || $user->isAdmin()): ?>
-
-                                <!-- <a href="/comments/<?= $comment->getId() ?>/edit" class="btn btn-primary"
-                                   style="color: white"> <span aria-hidden="true">edit</span></a>        -->
                                 <button class="btn btn-primary" style="color: white"
                                         onclick="editClick(<?= $comment->getId() ?>)">Редактировать
                                 </button>
