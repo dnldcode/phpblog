@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-3">
                 <img id="photo" type="image"
-                       src="<?= 'http://blog.test/' . ($user->getPhoto() ?? 'uploads/default.png') ?>" height="150px"/>
+                       src="<?= 'http://blog.test/' . ($profile->getPhoto() ?? 'uploads/default.png') ?>" height="150px"/>
             </div>
             <div class="col" style="margin-top: 7.5%"><h1><?= $profile->getNickname() ?></h1></div>
         </div>
