@@ -31,6 +31,10 @@
                 <div class="card" id="comment<?= $comment->getId() ?>">
                     <div class="card-header">
                         <div style="display: inline-block;">
+                            <img id="photo" type="image"
+                                 src="<?= 'http://blog.test/' . (\MyProject\Models\Users\User::getById($comment->getAuthorId())->getPhoto() ?? 'uploads/default.png') ?>"
+                                 height="50px" style="padding-right: 10px"/>
+
                             <?= \MyProject\Models\Users\User::getById($comment->getAuthorId())->getNickname() ?></div>
                         <div style="float: right">
                             <?php if ($user->getId() === $comment->getAuthorId() || $user->isAdmin()): ?>
