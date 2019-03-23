@@ -62,6 +62,27 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/userArticles.php', ['title' => 'Комментарии', 'articles' => $articles, 'profile' => $user]);
     }
 
+    public function commentsById(int $id)
+    {
+        if (empty($this->user)) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Недостаточно прав');
+        }
+
+        $user = User::getById($id);
+
+        if ($user === null) {
+            throw new NotFoundException('Пользователь не найден');
+        }
+
+        $comments = Comment::getAllByUserId($id);
+
+        $this->view->renderHtml('admin/userComments.php', ['title' => 'Комментарии', 'comments' => $comments, 'profile' => $user]);
+    }
+
     public function users()
     {
         if (empty($this->user)) {

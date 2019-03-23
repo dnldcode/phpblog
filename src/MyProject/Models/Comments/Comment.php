@@ -141,4 +141,10 @@ class Comment extends ActiveRecordEntity
         $db->query('DELETE FROM ' . static::getTableName() . ' WHERE article_id = :article_id',
             [':article_id' => $articleId], static::class);
     }
+
+    public function getAllByUserId(int $id): array
+    {
+        $db = Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE author_id = :author_id;', [':author_id' => $id], static::class);
+    }
 }

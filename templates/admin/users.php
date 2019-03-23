@@ -11,6 +11,7 @@
         <th scope="col">id</th>
         <th scope="col">Имя</th>
         <th scope="col">Статьи</th>
+        <th scope="col">Комментарии</th>
         <th scope="col">Email</th>
         <th scope="col">Дата</th>
         <th scope="col">Действия</th>
@@ -22,6 +23,7 @@
             <th scope="row"><?= $user->getId() ?></th>
             <td><a href="/user/id<?= $user->getId() ?>"><?= $user->getNickname() ?></a></td>
             <td><a href="/adminpanel/users/<?= $user->getId() ?>/articles">Click</a></td>
+            <td><a href="/adminpanel/users/<?= $user->getId() ?>/comments">Click</a></td>
             <td><?= $user->getEmail() ?></td>
             <td><?= $user->getRegistrationDate() ?></td>
             <td><a href="/adminpanel/users/id<?= $user->getId() ?>" class="btn btn-primary"
