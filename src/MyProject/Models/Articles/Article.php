@@ -45,7 +45,7 @@ class Article extends ActiveRecordEntity
      */
     public function getShortText(): string
     {
-        return substr($this->text, 0, 100);
+        return substr($this->text, 0, 70);
     }
 
     /**

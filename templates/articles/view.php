@@ -3,7 +3,7 @@
 <?php if (!$article->isPublished()): ?>
     <pre>(Не опубликована)</pre>
 <?php endif; ?>
-    <p><?= $article->getText() ?></p>
+    <pre><?= $article->getText() ?></pre>
     <p>Автор: <a href="/user/id<?= $article->getAuthorId() ?>"><?= $article->getAuthor()->getNickname() ?></a></p>
 <?php if ($user !== null && $user->isAdmin()): ?>
     <a href="/articles/<?= $article->getId() ?>/edit" class="btn btn-primary" style="color: white">Редактировать
