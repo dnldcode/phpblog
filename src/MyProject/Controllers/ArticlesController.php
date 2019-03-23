@@ -101,4 +101,15 @@ class ArticlesController extends AbstractController
             $this->view->renderHtml('articles/ArticleDeleted.php');
         }
     }
+
+    public function articlesByUser()
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        $articles = Article::getAllByUserId($this->user->getId());
+
+        $this->view->renderHtml('users/articles.php', ['articles' => $articles]);
+    }
 }

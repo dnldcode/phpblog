@@ -25,7 +25,7 @@
                         <?php if ($user->isAdmin()): ?>
                             <a class="dropdown-item" href="/adminpanel">Админ панель</a>
                         <?php endif; ?>
-                        <a class="dropdown-item disabled" href="#">Мои статьи</a>
+                        <a class="dropdown-item" href="/myarticles">Мои статьи</a>
                         <a class="dropdown-item" href="/settings">Настройки</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/users/logout">Выйти</a>

@@ -149,7 +149,7 @@ class Article extends ActiveRecordEntity
         return $this;
     }
 
-    public function getAllByUserId(int $id): array
+    public static function getAllByUserId(int $id): array
     {
         $db = Db::getInstance();
         return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE author_id = :author_id;', [':author_id' => $id], static::class);
