@@ -7,6 +7,9 @@
 <?php else: ?>
     <?php foreach ($articles as $article): ?>
         <h2><a href="articles/<?= $article->getId() ?>"><?= $article->getName() ?></a></h2>
+        <?php if (!$article->isPublished()): ?>
+            <pre>(не опубликована)</pre>
+        <?php endif; ?>
         <p><?= $article->getText() ?></p>
         <hr>
     <?php endforeach; ?>

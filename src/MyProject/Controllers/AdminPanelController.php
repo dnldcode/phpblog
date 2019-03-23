@@ -23,7 +23,7 @@ class AdminPanelController extends AbstractController
             throw new Forbidden('Недостаточно прав');
         }
 
-        $articles = Article::findAll();
+        $articles = Article::findAllPublished();
 
         $this->view->renderHtml('admin/articles.php', ['title' => 'Админ панель', 'articles' => $articles]);
     }
@@ -42,7 +42,7 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/comments.php', ['title' => 'Комментарии', 'comments' => $comments]);
     }
 
-    public function articlesById(int $id)
+    public function articlesById(int $userId)
     {
         if (empty($this->user)) {
             throw new UnauthorizedException();
@@ -52,17 +52,17 @@ class AdminPanelController extends AbstractController
             throw new Forbidden('Недостаточно прав');
         }
 
-        $user = User::getById($id);
+        $user = User::getById($userId);
 
         if ($user === null) {
             throw new NotFoundException('Пользователь не найден');
         }
 
-        $articles = Article::getAllByUserId($id);
+        $articles = Article::getAllByUserId($userId);
         $this->view->renderHtml('admin/userArticles.php', ['title' => 'Комментарии', 'articles' => $articles, 'profile' => $user]);
     }
 
-    public function commentsById(int $id)
+    public function commentsById(int $userId)
     {
         if (empty($this->user)) {
             throw new UnauthorizedException();
@@ -72,13 +72,13 @@ class AdminPanelController extends AbstractController
             throw new Forbidden('Недостаточно прав');
         }
 
-        $user = User::getById($id);
+        $user = User::getById($userId);
 
         if ($user === null) {
             throw new NotFoundException('Пользователь не найден');
         }
 
-        $comments = Comment::getAllByUserId($id);
+        $comments = Comment::getAllByUserId($userId);
 
         $this->view->renderHtml('admin/userComments.php', ['title' => 'Комментарии', 'comments' => $comments, 'profile' => $user]);
     }
@@ -97,7 +97,7 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/users.php', ['title' => 'Комментарии', 'users' => $users]);
     }
 
-    public function userView(int $id)
+    public function userView(int $userId)
     {
         if (empty($this->user)) {
             throw new UnauthorizedException();
@@ -107,7 +107,7 @@ class AdminPanelController extends AbstractController
             throw new Forbidden('Недостаточно прав');
         }
 
-        $user = User::getById($id);
+        $user = User::getById($userId);
 
         if ($user === null) {
             throw new NotFoundException('Пользователь не найден');
@@ -125,5 +125,19 @@ class AdminPanelController extends AbstractController
         }
 
         $this->view->renderHtml('admin/userView.php', ['title' => 'Комментарии', 'profile' => $user, 'message' => $message]);
+    }
+
+    public function articlesToPublish()
+    {
+        if (empty($this->user)) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Недостаточно прав');
+        }
+
+        $articles = Article::findAllNotPublished();
+        $this->view->renderHtml('admin/articlesToPublish.php', ['title' => 'Комментарии', 'articles' => $articles]);
     }
 }

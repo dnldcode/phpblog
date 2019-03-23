@@ -19,6 +19,14 @@ class ArticlesController extends AbstractController
             throw new NotFoundException();
         }
 
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$article->isPublished() && !$this->user->isAdmin() && $article->getAuthorId() !== $this->user->getId()) {
+            throw new Forbidden('Для просмотра статьи нужно обладать правами администратора');
+        }
+
         $this->view->renderHtml('articles/view.php', [
             'article' => $article,
             'comments' => Comment::findAllByArticleId($articleId)
@@ -38,7 +46,7 @@ class ArticlesController extends AbstractController
         }
 
         if (!$this->user->isAdmin()) {
-            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
+            throw new Forbidden('Для изменения статьи нужно обладать правами администратора');
         }
 
         if (!empty($_POST)) {
@@ -62,9 +70,6 @@ class ArticlesController extends AbstractController
             throw new UnauthorizedException();
         }
 
-        if (!$this->user->isAdmin()) {
-            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
-        }
 
         if (!empty($_POST)) {
             try {
@@ -87,19 +92,19 @@ class ArticlesController extends AbstractController
             throw new UnauthorizedException();
         }
 
-        if (!$this->user->isAdmin()) {
-            throw new Forbidden('Для добавления статьи нужно обладать правами администратора');
-        }
-
         $article = Article::getById($articleId);
 
         if ($article === null) {
             $this->view->renderHtml('errors/NotFound.php', ['error' => 'Статья не может быть удалена, так как ее не существует!']);
-        } else {
-            Comment::deleteCommentsInArticle($article->getId());
-            $article->delete();
-            $this->view->renderHtml('articles/ArticleDeleted.php');
         }
+
+        if (!$this->user->isAdmin() && $article->getAuthorId() !== $this->user->getId()) {
+            throw new Forbidden('Для удаления статьи нужно обладать правами администратора');
+        }
+
+        Comment::deleteCommentsInArticle($article->getId());
+        $article->delete();
+        $this->view->renderHtml('articles/ArticleDeleted.php');
     }
 
     public function articlesByUser()
@@ -109,7 +114,46 @@ class ArticlesController extends AbstractController
         }
 
         $articles = Article::getAllByUserId($this->user->getId());
-
         $this->view->renderHtml('users/articles.php', ['articles' => $articles]);
+    }
+
+    public function publish(int $articleId)
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Для опубликования статьи нужно обладать правами администратора');
+        }
+
+        $article = Article::getById($articleId);
+
+        if ($article === null) {
+            $this->view->renderHtml('errors/NotFound.php', ['error' => 'Статья не может быть удалена, так как ее не существует!']);
+        } else {
+            $article->publish();
+            header('Location: /articles/' . $article->getId());
+        }
+    }
+
+    public function hide(int $articleId)
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new Forbidden('Для опубликования статьи нужно обладать правами администратора');
+        }
+
+        $article = Article::getById($articleId);
+
+        if ($article === null) {
+            $this->view->renderHtml('errors/NotFound.php', ['error' => 'Статья не может быть удалена, так как ее не существует!']);
+        } else {
+            $article->hide();
+            header('Location: /articles/' . $article->getId());
+        }
     }
 }

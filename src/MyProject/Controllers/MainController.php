@@ -8,7 +8,7 @@ class MainController extends AbstractController
 {
     public function main()
     {
-        $articles = Article::findAll();
+        $articles = Article::findAllPublished();
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 }

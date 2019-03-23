@@ -2,17 +2,8 @@
 
 <script>
     var temp = document.getElementsByClassName("nav-link");
-    temp.item(0).classList.add("active");
+    temp.item(3).classList.add("active");
 </script>
-
-<div class="row">
-    <div class="col">
-        <h1><?= $profile->getNickname() ?>'s articles: </h1>
-    </div>
-</div>
-
-<br/>
-<br/>
 
 <table class="table table-sm">
     <thead>
@@ -29,26 +20,14 @@
     <?php foreach ($articles as $article): ?>
         <tr>
             <th scope="row"><?= $article->getId() ?></th>
-            <td>
-                <a href="/articles/<?= $article->getId() ?>"><?= $article->getName() ?></a>
-                <?php if (!$article->isPublished()): ?>
-                    <pre>(не опубликована)</pre>
-                <?php endif; ?>
-            </td>
+            <td><a href="/articles/<?= $article->getId() ?>"><?= $article->getName() ?></a></td>
             <td><?= $article->getShortText() ?></td>
             <td><a href="/user/id<?= $article->getAuthorId() ?>"><?= $article->getAuthor()->getNickname() ?></a></td>
             <td><?= $article->getDate() ?></td>
             <td><a href="/articles/<?= $article->getId() ?>/edit" class="btn btn-primary"
                    style="color: white">Редактировать</a>
-                <?php if (!$article->isPublished()): ?>
                 <a href="/articles/<?= $article->getId() ?>/publish" class="btn btn-primary"
                    style="color: white">Опубликовать</a></td>
-            <?php else: ?>
-                <a href="/articles/<?= $article->getId() ?>/hide" class="btn btn-primary"
-                   style="color: white">Скрыть</a></td>
-            <?php endif; ?>
-            </td>
-
         </tr>
     <?php endforeach; ?>
     </tbody>

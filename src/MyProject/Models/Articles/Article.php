@@ -18,6 +18,9 @@ class Article extends ActiveRecordEntity
     /** @var string */
     protected $authorId;
 
+    /** @var bool */
+    protected $isPublished;
+
     /** @var string */
     protected $createdAt;
 
@@ -95,6 +98,26 @@ class Article extends ActiveRecordEntity
     }
 
     /**
+     * @return bool
+     */
+    public function isPublished(): bool
+    {
+        return $this->isPublished;
+    }
+
+    public function publish(): void
+    {
+        $this->isPublished = true;
+        $this->save();
+    }
+
+    public function hide(): void
+    {
+        $this->isPublished = '0';
+        $this->save();
+    }
+
+    /**
      * @param string $authorId
      */
     public function setAuthorId(string $authorId): void
@@ -153,5 +176,23 @@ class Article extends ActiveRecordEntity
     {
         $db = Db::getInstance();
         return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE author_id = :author_id;', [':author_id' => $id], static::class);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function findAllPublished(): array
+    {
+        $db = Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE is_published = 1;', [], static::class);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function findAllNotPublished(): array
+    {
+        $db = Db::getInstance();
+        return $db->query('SELECT * FROM ' . static::getTableName() . ' WHERE is_published = 0;', [], static::class);
     }
 }

@@ -25,7 +25,7 @@
                         <a class="nav-link" href="/adminpanel/users">Все пользователи</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Заявки на публикацию</a>
+                        <a class="nav-link" href="/adminpanel/articles/requests">Заявки на публикацию</a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +39,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="/">На главную страницу</a>
-                        <a class="dropdown-item" href="#">Настройки</a>
+                        <a class="dropdown-item disabled" href="#">Настройки</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/users/logout">Выйти</a>
                     </div>

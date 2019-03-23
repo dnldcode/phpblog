@@ -26,6 +26,7 @@
                             <a class="dropdown-item" href="/adminpanel">Админ панель</a>
                         <?php endif; ?>
                         <a class="dropdown-item" href="/myarticles">Мои статьи</a>
+                        <a class="dropdown-item" href="/articles/add">Написать статью</a>
                         <a class="dropdown-item" href="/settings">Настройки</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/users/logout">Выйти</a>

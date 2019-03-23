@@ -47,7 +47,7 @@ abstract class ActiveRecordEntity
     abstract protected static function getTableName(): string;
 
     /**
-     * @return Article[]
+     * @return array[]
      */
     public static function findAll(): array
     {
