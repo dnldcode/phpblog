@@ -107,27 +107,38 @@ class UsersController extends AbstractController
 
         if (!empty($_FILES)) {
             $file = $_FILES['attachment'];
-
             $newFilePath = __DIR__ . '/../../../www/uploads/photo' . $this->user->getId() . '.jpg';
 
             $imageSize = getimagesize($file['tmp_name']);
 
             $allowedExtensions = ['jpg', 'png', 'gif'];
             $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            if (!in_array($extension, $allowedExtensions)) {
+
+            if (empty($file['name'])) {
+                $error = 'Вы не выбрали фотографию!';
+            } elseif (!in_array($extension, $allowedExtensions)) {
                 $error = 'Загрузка файлов с таким расширением запрещена!';
             } elseif ($file['error'] == UPLOAD_ERR_INI_SIZE) {
                 $error = 'Размер файла слишком большой';
             } elseif ($imageSize[0] > 1000 || $imageSize[1] > 1000) {
                 $error = 'Недопустимое расширение изображения. Максимальное - 1000px x 1000px';
-            } elseif ($file['error'] !== UPLOAD_ERR_OK ||!move_uploaded_file($file['tmp_name'], $newFilePath)) {
+            } elseif ($file['error'] !== UPLOAD_ERR_OK || !move_uploaded_file($file['tmp_name'], $newFilePath)) {
                 $error = 'Ошибка при загрузке файла';
             } else {
                 $message = "Фотография успешно загружена";
                 $this->user->updatePhoto('uploads/photo' . $this->user->getId() . '.jpg');
             }
-        }
+        } elseif ($_POST['changePassword'] === '') {
+            try {
+                $this->user->changePassword($_POST);
 
+                UsersAuthService::createToken($this->user);
+
+                $message = 'Пароль успешно изменен';
+            } catch (InvalidArugmentException $e) {
+                $error = $e->getMessage();
+            }
+        }
         $this->view->renderHtml('users/settings.php', ['error' => $error, 'message' => $message]);
     }
 }

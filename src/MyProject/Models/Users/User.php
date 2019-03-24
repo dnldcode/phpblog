@@ -4,6 +4,7 @@ namespace MyProject\Models\Users;
 
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
+use MyProject\Services\UsersAuthService;
 
 class User extends ActiveRecordEntity
 {
@@ -246,5 +247,45 @@ class User extends ActiveRecordEntity
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * @param array $password
+     * @throws InvalidArugmentException
+     */
+    public function changePassword(array $password): void
+    {
+        if (empty($password['password'])) {
+            throw new InvalidArugmentException('Старый пароль не передан');
+        }
+
+        if (empty($password['newPassword'])) {
+            throw new InvalidArugmentException('Новый пароль не передан');
+        }
+
+        if (empty($password['newPasswordConfirmed'])) {
+            throw new InvalidArugmentException('Вы не повторили новый пароль');
+        }
+
+        if (!password_verify($password['password'], $this->getPasswordHash())) {
+            throw new InvalidArugmentException('Неверный старый пароль');
+        }
+
+        if (strlen($password['newPassword']) < 6) {
+            throw new InvalidArugmentException('Новый пароль должен быть не менее 6 символов в длину');
+        }
+
+        if ($password['newPassword'] !== $password['newPasswordConfirmed']) {
+            throw new InvalidArugmentException('Новые пароли не совпадают');
+        }
+
+        if ($password['password'] === $password['newPassword']) {
+            throw new InvalidArugmentException('Новый и старый пароли должны отличаться');
+        }
+
+        $this->passwordHash = password_hash($password['newPassword'], PASSWORD_DEFAULT);
+
+        $this->refreshAuthToken();
+        $this->save();
     }
 }
