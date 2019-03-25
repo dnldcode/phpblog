@@ -6,6 +6,12 @@ use MyProject\Models\Users\User;
 
 class EmailSender
 {
+    /**
+     * @param User $receiver
+     * @param string $subject
+     * @param string $templateName
+     * @param array $templateVars
+     */
     public static function send(User $receiver, string $subject, string $templateName, array $templateVars = []): void
     {
         extract($templateVars);

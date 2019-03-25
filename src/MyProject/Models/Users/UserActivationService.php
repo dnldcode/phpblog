@@ -6,8 +6,14 @@ use MyProject\Services\Db;
 
 class UserActivationService
 {
+    /** @var string  */
     private const TABLE_NAME = 'users_activation_codes';
 
+    /**
+     * @param User $user
+     * @return string
+     * @throws \Exception
+     */
     public static function createActivationCode(User $user): string
     {
         $code = bin2hex(random_bytes(16));
@@ -24,6 +30,11 @@ class UserActivationService
         return $code;
     }
 
+    /**
+     * @param User $user
+     * @param string $code
+     * @return bool
+     */
     public static function checkActivationCode(User $user, string $code): bool
     {
         $db = Db::getInstance();
@@ -37,6 +48,9 @@ class UserActivationService
         return !empty($result);
     }
 
+    /**
+     * @param User $user
+     */
     public static function deleteActivationCode(User $user)
     {
         $db = Db::getInstance();

@@ -13,6 +13,10 @@ use MyProject\Services\Db;
 
 class AdminPanelController extends AbstractController
 {
+    /**
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function view()
     {
         if (empty($this->user)) {
@@ -28,6 +32,10 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/articles.php', ['title' => 'Админ панель', 'articles' => $articles]);
     }
 
+    /**
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function comments()
     {
         if (empty($this->user)) {
@@ -42,6 +50,12 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/comments.php', ['title' => 'Комментарии', 'comments' => $comments]);
     }
 
+    /**
+     * @param int $userId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function articlesById(int $userId)
     {
         if (empty($this->user)) {
@@ -62,6 +76,12 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/userArticles.php', ['title' => 'Комментарии', 'articles' => $articles, 'profile' => $user]);
     }
 
+    /**
+     * @param int $userId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function commentsById(int $userId)
     {
         if (empty($this->user)) {
@@ -83,6 +103,10 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/userComments.php', ['title' => 'Комментарии', 'comments' => $comments, 'profile' => $user]);
     }
 
+    /**
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function users()
     {
         if (empty($this->user)) {
@@ -97,6 +121,12 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/users.php', ['title' => 'Комментарии', 'users' => $users]);
     }
 
+    /**
+     * @param int $userId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function userView(int $userId)
     {
         if (empty($this->user)) {
@@ -127,6 +157,10 @@ class AdminPanelController extends AbstractController
         $this->view->renderHtml('admin/userView.php', ['title' => 'Комментарии', 'profile' => $user, 'message' => $message]);
     }
 
+    /**
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function articlesToPublish()
     {
         if (empty($this->user)) {

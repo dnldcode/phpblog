@@ -17,6 +17,10 @@ abstract class ActiveRecordEntity
         return $this->id;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function __set($name, $value)
     {
         $camelCaseName = $this->underscoreToCamelCase($name);
@@ -55,6 +59,10 @@ abstract class ActiveRecordEntity
         return $db->query('SELECT * FROM ' . static::getTableName() . ';', [], static::class);
     }
 
+    /**
+     * @param int $id
+     * @return ActiveRecordEntity|null
+     */
     public static function getById(int $id): ?self
     {
         $db = Db::getInstance();
@@ -66,6 +74,9 @@ abstract class ActiveRecordEntity
         return $enteties ? $enteties[0] : null;
     }
 
+    /**
+     * @return array
+     */
     private function mapPropertiesToDbFormat(): array
     {
         $reflector = new \ReflectionObject($this);
@@ -90,6 +101,9 @@ abstract class ActiveRecordEntity
         }
     }
 
+    /**
+     * @param array $mappedProperties
+     */
     private function update(array $mappedProperties): void
     {
         $columns2params = [];
@@ -106,6 +120,9 @@ abstract class ActiveRecordEntity
         $db->query($sql, $params2values, static::class);
     }
 
+    /**
+     * @param array $mappedProperties
+     */
     private function insert(array $mappedProperties): void
     {
         $mappedProperties = array_filter($mappedProperties);
@@ -149,6 +166,11 @@ abstract class ActiveRecordEntity
         $this->id = null;
     }
 
+    /**
+     * @param string $columnName
+     * @param string $value
+     * @return ActiveRecordEntity|null
+     */
     public static function findOneByColumn (string $columnName, string $value): ?self
     {
         $db = Db::getInstance();

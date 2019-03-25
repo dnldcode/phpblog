@@ -79,6 +79,7 @@ class Comment extends ActiveRecordEntity
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getDate(): string
     {
@@ -106,6 +107,13 @@ class Comment extends ActiveRecordEntity
         );
     }
 
+    /**
+     * @param string $text
+     * @param User $author
+     * @param int $articleId
+     * @return Comment|null
+     * @throws InvalidArugmentException
+     */
     public static function addComment(string $text, User $author, int $articleId): ?self
     {
         if (empty($text)) {
@@ -123,6 +131,11 @@ class Comment extends ActiveRecordEntity
         return $comment;
     }
 
+    /**
+     * @param string $text
+     * @return Comment|null
+     * @throws InvalidArugmentException
+     */
     public function updateComment(string $text): ?self
     {
         if (empty($text)){
@@ -135,6 +148,9 @@ class Comment extends ActiveRecordEntity
         return $this;
     }
 
+    /**
+     * @param int $articleId
+     */
     public static function deleteCommentsInArticle(int $articleId)
     {
         $db = Db::getInstance();
@@ -142,6 +158,10 @@ class Comment extends ActiveRecordEntity
             [':article_id' => $articleId], static::class);
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function getAllByUserId(int $id): array
     {
         $db = Db::getInstance();

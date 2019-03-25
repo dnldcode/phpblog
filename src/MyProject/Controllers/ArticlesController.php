@@ -11,6 +11,12 @@ use MyProject\Models\Comments\Comment;
 
 class ArticlesController extends AbstractController
 {
+    /**
+     * @param int $articleId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function view(int $articleId)
     {
         $article = Article::getById($articleId);
@@ -33,6 +39,12 @@ class ArticlesController extends AbstractController
         ]);
     }
 
+    /**
+     * @param int $articleId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function edit(int $articleId)
     {
         $article = Article::getById($articleId);
@@ -64,6 +76,9 @@ class ArticlesController extends AbstractController
         $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function add()
     {
         if ($this->user === null) {
@@ -86,6 +101,11 @@ class ArticlesController extends AbstractController
         $this->view->renderHtml('articles/add.php');
     }
 
+    /**
+     * @param int $articleId
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function delete(int $articleId)
     {
         if ($this->user === null) {
@@ -107,6 +127,9 @@ class ArticlesController extends AbstractController
         $this->view->renderHtml('articles/ArticleDeleted.php');
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function articlesByUser()
     {
         if ($this->user === null) {
@@ -117,6 +140,11 @@ class ArticlesController extends AbstractController
         $this->view->renderHtml('users/articles.php', ['articles' => $articles]);
     }
 
+    /**
+     * @param int $articleId
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function publish(int $articleId)
     {
         if ($this->user === null) {
@@ -137,6 +165,11 @@ class ArticlesController extends AbstractController
         }
     }
 
+    /**
+     * @param int $articleId
+     * @throws Forbidden
+     * @throws UnauthorizedException
+     */
     public function hide(int $articleId)
     {
         if ($this->user === null) {

@@ -6,12 +6,18 @@ use MyProject\Models\Users\User;
 
 class UsersAuthService
 {
+    /**
+     * @param User $user
+     */
    public static function createToken(User $user): void
    {
        $token = $user->getId() . ':' . $user->getAuthToken();
        setcookie('token', $token, 0, '/', '', false, true);
    }
 
+    /**
+     * @return User|null
+     */
    public static function getUserByToken(): ?User
    {
        $token = $_COOKIE['token'] ?? '';

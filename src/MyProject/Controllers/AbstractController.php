@@ -14,6 +14,9 @@ abstract class AbstractController
     /** @var User|null */
     protected $user;
 
+    /**
+     * AbstractController constructor.
+     */
     public function __construct()
     {
         $this->user = UsersAuthService::getUserByToken();

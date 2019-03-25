@@ -66,6 +66,7 @@ class Article extends ActiveRecordEntity
 
     /**
      * @return string
+     * @throws \Exception
      */
     public function getDate(): string
     {
@@ -133,6 +134,12 @@ class Article extends ActiveRecordEntity
         $this->authorId = $author->getId();
     }
 
+    /**
+     * @param array $fields
+     * @param User $author
+     * @return Article
+     * @throws InvalidArugmentException
+     */
     public static function createFromArray(array $fields, User $author): Article
     {
         if (empty($fields['name'])) {
@@ -154,6 +161,10 @@ class Article extends ActiveRecordEntity
         return $article;
     }
 
+    /**
+     * @param array $fields
+     * @return Article
+     */
     public function updateFromArray(array $fields): Article
     {
         if (empty($fields['name'])) {
@@ -172,6 +183,10 @@ class Article extends ActiveRecordEntity
         return $this;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public static function getAllByUserId(int $id): array
     {
         $db = Db::getInstance();

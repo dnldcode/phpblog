@@ -38,6 +38,10 @@ class UsersController extends AbstractController
         $this->view->renderHtml('users/signUp.php');
     }
 
+    /**
+     * @param int $userId
+     * @param string $activationCode
+     */
     public function activate(int $userId, string $activationCode): void
     {
         try {
@@ -85,6 +89,11 @@ class UsersController extends AbstractController
         header('Location: /');
     }
 
+    /**
+     * @param int $userId
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function show(int $userId)
     {
         if ($this->user === null) {
@@ -99,6 +108,9 @@ class UsersController extends AbstractController
         $this->view->renderHtml('users/profile.php', ['profile' => $profile]);
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public function settings()
     {
         if ($this->user === null) {

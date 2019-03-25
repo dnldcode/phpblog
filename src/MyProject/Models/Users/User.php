@@ -32,8 +32,7 @@ class User extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
-
-    //    Getters and Setters
+    /*  Getters and Setters */
 
     /**
      * @return string
@@ -131,8 +130,13 @@ class User extends ActiveRecordEntity
         $this->role = $role;
     }
 
-    //////////////
+    /* /Getters and Setters */
 
+    /**
+     * @param array $userData
+     * @return User
+     * @throws InvalidArugmentException
+     */
     public static function signUp(array $userData): User
     {
         if (empty($userData['nickname']))
@@ -182,6 +186,11 @@ class User extends ActiveRecordEntity
         return $this->isConfirmed;
     }
 
+    /**
+     * @param array $loginData
+     * @return User
+     * @throws InvalidArugmentException
+     */
     public static function login(array $loginData): User
     {
         if (empty($loginData['email'])) {
@@ -221,12 +230,20 @@ class User extends ActiveRecordEntity
         return $this->role === admin;
     }
 
+    /**
+     * @param string $path
+     */
     public function updatePhoto(string $path): void
     {
         $this->photo = $path;
         $this->save();
     }
 
+    /**
+     * @param array $fields
+     * @return User
+     * @throws InvalidArugmentException
+     */
     public function updateFromArray(array $fields): User
     {
         if (empty($fields['email'])) {

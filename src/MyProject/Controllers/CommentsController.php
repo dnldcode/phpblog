@@ -11,6 +11,11 @@ use MyProject\Models\Comments\Comment;
 
 class CommentsController extends AbstractController
 {
+    /**
+     * @param int $articleId
+     * @throws InvalidArugmentException
+     * @throws UnauthorizedException
+     */
     public function addComment(int $articleId)
     {
         if ($this->user === null) {
@@ -35,6 +40,12 @@ class CommentsController extends AbstractController
             header('Location: /articles/' . $articleId);
     }
 
+    /**
+     * @param int $commentId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function edit(int $commentId)
     {
         if ($this->user === null) {
@@ -61,6 +72,12 @@ class CommentsController extends AbstractController
         header('Location: /articles/' . $comment->getArticleId() . '#comment' . $comment->getId());
     }
 
+    /**
+     * @param int $commentId
+     * @throws Forbidden
+     * @throws NotFoundException
+     * @throws UnauthorizedException
+     */
     public function delete(int $commentId)
     {
         if ($this->user === null) {
