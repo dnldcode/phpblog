@@ -6,6 +6,9 @@ use MyProject\Models\Articles\Article;
 
 class MainController extends AbstractController
 {
+    /**
+     * @throws \MyProject\Exceptions\DbException
+     */
     public function main()
     {
         $articles = Article::findAllPublished();

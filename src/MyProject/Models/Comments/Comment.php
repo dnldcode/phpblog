@@ -43,6 +43,7 @@ class Comment extends ActiveRecordEntity
 
     /**
      * @return User
+     * @throws \MyProject\Exceptions\DbException
      */
     public function getAuthor(): User
     {
@@ -113,7 +114,6 @@ class Comment extends ActiveRecordEntity
 
     #
     # Methods
-    #
 
     /**
      * @param int $articleId

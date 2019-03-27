@@ -16,6 +16,7 @@ class AdminPanelController extends AbstractController
     /**
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function view()
     {
@@ -55,6 +56,7 @@ class AdminPanelController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function articlesById(int $userId)
     {
@@ -81,6 +83,7 @@ class AdminPanelController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function commentsById(int $userId)
     {
@@ -160,6 +163,7 @@ class AdminPanelController extends AbstractController
     /**
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function articlesToPublish()
     {

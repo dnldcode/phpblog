@@ -17,6 +17,7 @@ class UsersAuthService
 
     /**
      * @return User|null
+     * @throws \MyProject\Exceptions\DbException
      */
    public static function getUserByToken(): ?User
    {

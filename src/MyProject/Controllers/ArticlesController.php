@@ -16,6 +16,7 @@ class ArticlesController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function view(int $articleId)
     {
@@ -105,6 +106,7 @@ class ArticlesController extends AbstractController
      * @param int $articleId
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function delete(int $articleId)
     {
@@ -129,6 +131,7 @@ class ArticlesController extends AbstractController
 
     /**
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function articlesByUser()
     {

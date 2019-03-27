@@ -51,7 +51,8 @@ abstract class ActiveRecordEntity
     abstract protected static function getTableName(): string;
 
     /**
-     * @return array[]
+     * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function findAll(): array
     {
@@ -62,6 +63,7 @@ abstract class ActiveRecordEntity
     /**
      * @param int $id
      * @return ActiveRecordEntity|null
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function getById(int $id): ?self
     {
@@ -103,6 +105,7 @@ abstract class ActiveRecordEntity
 
     /**
      * @param array $mappedProperties
+     * @throws \MyProject\Exceptions\DbException
      */
     private function update(array $mappedProperties): void
     {
@@ -122,6 +125,7 @@ abstract class ActiveRecordEntity
 
     /**
      * @param array $mappedProperties
+     * @throws \MyProject\Exceptions\DbException
      */
     private function insert(array $mappedProperties): void
     {
@@ -158,6 +162,9 @@ abstract class ActiveRecordEntity
         }
     }
 
+    /**
+     * @throws \MyProject\Exceptions\DbException
+     */
     public function delete(): void
     {
         $db = Db::getInstance();
@@ -170,6 +177,7 @@ abstract class ActiveRecordEntity
      * @param string $columnName
      * @param string $value
      * @return ActiveRecordEntity|null
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function findOneByColumn (string $columnName, string $value): ?self
     {

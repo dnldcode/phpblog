@@ -32,7 +32,9 @@ class User extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
-    /*  Getters and Setters */
+    #
+    # Getters
+    #
 
     /**
      * @return string
@@ -106,6 +108,10 @@ class User extends ActiveRecordEntity
         return $this->role;
     }
 
+    #
+    # Setters
+    #
+
     /**
      * @param string $email
      */
@@ -130,12 +136,14 @@ class User extends ActiveRecordEntity
         $this->role = $role;
     }
 
-    /* /Getters and Setters */
+    #
+    # Methods
 
     /**
      * @param array $userData
      * @return User
      * @throws InvalidArugmentException
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function signUp(array $userData): User
     {
@@ -190,6 +198,7 @@ class User extends ActiveRecordEntity
      * @param array $loginData
      * @return User
      * @throws InvalidArugmentException
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function login(array $loginData): User
     {
@@ -227,7 +236,7 @@ class User extends ActiveRecordEntity
 
     public function isAdmin(): bool
     {
-        return $this->role === admin;
+        return $this->role === 'admin';
     }
 
     /**

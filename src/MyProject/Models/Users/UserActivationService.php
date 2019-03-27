@@ -34,6 +34,7 @@ class UserActivationService
      * @param User $user
      * @param string $code
      * @return bool
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function checkActivationCode(User $user, string $code): bool
     {
@@ -50,6 +51,7 @@ class UserActivationService
 
     /**
      * @param User $user
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function deleteActivationCode(User $user)
     {

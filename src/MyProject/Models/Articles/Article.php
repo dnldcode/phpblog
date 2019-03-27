@@ -53,7 +53,8 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * @return string
+     * @return User
+     * @throws \MyProject\Exceptions\DbException
      */
     public function getAuthor(): User
     {
@@ -132,7 +133,6 @@ class Article extends ActiveRecordEntity
 
     #
     # Methods
-    #
 
     /**
      * @return bool
