@@ -1,0 +1,14 @@
+{
+    "name": "dnldcode/blog.test",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Serhii Holishevskyi",
+            "email": "dnldcode@gmail.com"
+        }
+    ],
+    "require": {
+        "erusev/parsedown": "^1.7"
+    }
+}

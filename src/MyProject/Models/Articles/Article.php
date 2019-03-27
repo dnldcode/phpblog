@@ -24,6 +24,10 @@ class Article extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
+    #
+    # Getters
+    #
+
     /**
      * @return string
      */
@@ -83,6 +87,18 @@ class Article extends ActiveRecordEntity
     }
 
     /**
+     * @return string
+     */
+    public function getParsedText(): string
+    {
+        return \Parsedown::instance()->text($this->getText());
+    }
+
+    #
+    # Setters
+    #
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void
@@ -97,6 +113,26 @@ class Article extends ActiveRecordEntity
     {
         $this->text = $text;
     }
+
+    /**
+     * @param string $authorId
+     */
+    public function setAuthorId(string $authorId): void
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
+     * @param User $author
+     */
+    public function setAuthor(User $author): void
+    {
+        $this->authorId = $author->getId();
+    }
+
+    #
+    # Methods
+    #
 
     /**
      * @return bool
@@ -116,22 +152,6 @@ class Article extends ActiveRecordEntity
     {
         $this->isPublished = '0';
         $this->save();
-    }
-
-    /**
-     * @param string $authorId
-     */
-    public function setAuthorId(string $authorId): void
-    {
-        $this->authorId = $authorId;
-    }
-
-    /**
-     * @param User $author
-     */
-    public function setAuthor(User $author): void
-    {
-        $this->authorId = $author->getId();
     }
 
     /**
@@ -186,6 +206,7 @@ class Article extends ActiveRecordEntity
     /**
      * @param int $id
      * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function getAllByUserId(int $id): array
     {
@@ -194,7 +215,8 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * @return array[]
+     * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function findAllPublished(): array
     {
@@ -203,7 +225,8 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * @return array[]
+     * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function findAllNotPublished(): array
     {

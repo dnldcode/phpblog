@@ -21,36 +21,16 @@ class Comment extends ActiveRecordEntity
     /** @var string */
     protected $createdAt;
 
+    #
+    # Getters
+    #
+
     /**
      * @return string
      */
     protected static function getTableName(): string
     {
         return 'comments';
-    }
-
-    /**
-     * @param string $authorId
-     */
-    public function setAuthorId(string $authorId): void
-    {
-        $this->authorId = $authorId;
-    }
-
-    /**
-     * @param string $articleId
-     */
-    public function setArticleId(string $articleId): void
-    {
-        $this->articleId = $articleId;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText(string $text): void
-    {
-        $this->text = $text;
     }
 
     /**
@@ -96,7 +76,49 @@ class Comment extends ActiveRecordEntity
     }
 
     /**
-     * @return Comment[]
+     * @return string
+     */
+    public function getParsedText(): string
+    {
+        return \Parsedown::instance()->text($this->getText());
+    }
+
+    #
+    # Setters
+    #
+
+    /**
+     * @param string $authorId
+     */
+    public function setAuthorId(string $authorId): void
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
+     * @param string $articleId
+     */
+    public function setArticleId(string $articleId): void
+    {
+        $this->articleId = $articleId;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
+
+    #
+    # Methods
+    #
+
+    /**
+     * @param int $articleId
+     * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function findAllByArticleId(int $articleId): array
     {
@@ -150,6 +172,7 @@ class Comment extends ActiveRecordEntity
 
     /**
      * @param int $articleId
+     * @throws \MyProject\Exceptions\DbException
      */
     public static function deleteCommentsInArticle(int $articleId)
     {
@@ -161,6 +184,7 @@ class Comment extends ActiveRecordEntity
     /**
      * @param int $id
      * @return array
+     * @throws \MyProject\Exceptions\DbException
      */
     public function getAllByUserId(int $id): array
     {

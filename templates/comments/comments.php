@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text" id="<?= $comment->getId() ?>"><?= $comment->getText(); ?></p>
+                        <p class="card-text" id="<?= $comment->getId() ?>"><?= $comment->getParsedText(); ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
