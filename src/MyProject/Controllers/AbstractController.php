@@ -23,4 +23,15 @@ abstract class AbstractController
         $this->view = new View(__DIR__ . '/../../../templates');
         $this->view->setVar('user', $this->user);
     }
+
+    /**
+     * @return mixed
+     */
+    protected function getInputData()
+    {
+        return json_decode(
+            file_get_contents('php://input'),
+            true
+        );
+    }
 }

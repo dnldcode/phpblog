@@ -36,6 +36,7 @@ class AdminPanelController extends AbstractController
     /**
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function comments()
     {
@@ -129,6 +130,7 @@ class AdminPanelController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function userView(int $userId)
     {
@@ -152,7 +154,6 @@ class AdminPanelController extends AbstractController
                 $message = 'Успешно обновлено';
             } catch (InvalidArugmentException $e) {
                 $this->view->renderHtml('admin/userView.php', ['title' => 'Комментарии', 'profile' => $user, 'error' => $e->getMessage()]);
-
                 return;
             }
         }

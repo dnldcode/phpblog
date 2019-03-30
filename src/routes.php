@@ -22,7 +22,7 @@ return [
     '~^adminpanel/users/id(\d+)$~' => [\MyProject\Controllers\AdminPanelController::class, 'userView'],
     '~^adminpanel/articles/requests$~' => [\MyProject\Controllers\AdminPanelController::class, 'articlesToPublish'],
     '~^articles/(\d+)/publish$~' => [\MyProject\Controllers\ArticlesController::class, 'publish'],
-    '~^articles/(\d+)/hide~' => [\MyProject\Controllers\ArticlesController::class, 'hide'],
+    '~^articles/(\d+)/hide$~' => [\MyProject\Controllers\ArticlesController::class, 'hide'],
     '~^myarticles$~' => [\MyProject\Controllers\ArticlesController::class, 'articlesByUser'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main']
 ];
