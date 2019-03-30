@@ -45,6 +45,7 @@ class ArticlesController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function edit(int $articleId)
     {
@@ -147,6 +148,7 @@ class ArticlesController extends AbstractController
      * @param int $articleId
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function publish(int $articleId)
     {
@@ -172,6 +174,7 @@ class ArticlesController extends AbstractController
      * @param int $articleId
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function hide(int $articleId)
     {

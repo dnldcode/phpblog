@@ -110,6 +110,7 @@ class AdminPanelController extends AbstractController
     /**
      * @throws Forbidden
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function users()
     {

@@ -4,7 +4,6 @@ namespace MyProject\Models\Users;
 
 use MyProject\Exceptions\InvalidArugmentException;
 use MyProject\Models\ActiveRecordEntity;
-use MyProject\Services\UsersAuthService;
 
 class User extends ActiveRecordEntity
 {

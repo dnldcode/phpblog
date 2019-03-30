@@ -15,6 +15,7 @@ class CommentsController extends AbstractController
      * @param int $articleId
      * @throws InvalidArugmentException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function addComment(int $articleId)
     {
@@ -45,6 +46,7 @@ class CommentsController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function edit(int $commentId)
     {
@@ -77,6 +79,7 @@ class CommentsController extends AbstractController
      * @throws Forbidden
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function delete(int $commentId)
     {

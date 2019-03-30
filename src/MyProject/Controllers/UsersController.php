@@ -41,6 +41,7 @@ class UsersController extends AbstractController
     /**
      * @param int $userId
      * @param string $activationCode
+     * @throws \MyProject\Exceptions\DbException
      */
     public function activate(int $userId, string $activationCode): void
     {
@@ -93,6 +94,7 @@ class UsersController extends AbstractController
      * @param int $userId
      * @throws NotFoundException
      * @throws UnauthorizedException
+     * @throws \MyProject\Exceptions\DbException
      */
     public function show(int $userId)
     {
